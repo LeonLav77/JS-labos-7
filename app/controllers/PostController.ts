@@ -59,39 +59,6 @@ class PostController {
         
         res.status(201).send({ ...newPost });
     }
-
-    public async updatePost(req: Request, res: Response): Promise<void> {
-        const postId: string = req.params.id;
-        const { comment } = req.body;
-
-        if (!comment) {
-            res.status(400).send('Missing required fields');
-            return;
-        }
-
-        const updatedPost: Post = await this.postRepository.updatePost(postId, comment);
-
-        if (!updatedPost) {
-            res.status(404).send('Post not found');
-            return;
-        }
-
-        res.send(updatedPost);
-    }
-
-    public async deletePost(req: Request, res: Response): Promise<void> {
-        const postId: string = req.params.id;
-
-        let postExists = await this.postRepository.getPostById(postId);
-        if (!postExists) {
-            res.status(404).send('Post not found');
-            return;
-        }
-
-        const deletedPost: Post = await this.postRepository.deletePost(postId);
-
-        res.send(deletedPost);
-    }
 }
 
 export default PostController;

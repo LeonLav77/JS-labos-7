@@ -55,34 +55,6 @@ class UserController {
         res.status(201).send(newUser);
     }
 
-    public async updateUser(req: Request, res: Response): Promise<void> {
-        let { name, email, password } = req.body;
-        const userId: string = req.params.id;
-
-        if (!name || !email || !password) {
-            res.status(400).send('Missing required fields');
-            return;
-        }
-
-        const salt = crypto.randomBytes(16).toString('hex'); 
-        const hashedPassword = this.hashPassword(password, salt);
-
-        const updatedUser: User = await this.userRepository.updateUser(
-            userId,
-            name,
-            email,
-            hashedPassword,
-            salt,
-        );
-
-        if (!updatedUser) {
-            res.status(404).send('User not found');
-            return;
-        }
-
-        res.send(updatedUser);
-    }
-
     public async deleteUser(req: Request, res: Response): Promise<void> {
         const userId: string = req.params.id;
 
