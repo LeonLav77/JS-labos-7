@@ -24,14 +24,14 @@ class UserRepository {
 
     async createNewUser(
         name: string,
+        username: string,
         email: string,
         password: string,
         salt: string,
-        role: number = 0
     ): Promise<User> {
         const [result] = await this.db.execute(
-            `INSERT INTO users (name, email, password, salt) VALUES (?, ?, ?, ?)`,
-            [name, email, password, salt]
+            `INSERT INTO users (name, username, email, password, salt) VALUES (?, ?, ?, ?, ?)`,
+            [name, username, email, password, salt]
         );
         const insertId = (result as any).insertId;
 

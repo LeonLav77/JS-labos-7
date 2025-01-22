@@ -28,9 +28,9 @@ class UserController {
     }
 
     public async register(req: Request, res: Response): Promise<void> {
-        let { name, email, password } = req.body;
+        let { name, username, email, password } = req.body;
 
-        if (!name || !email || !password) {
+        if (!name || !username || !email || !password) {
             res.status(400).send('Missing required fields');
             return;
         }
@@ -46,6 +46,7 @@ class UserController {
 
         const newUser: User = await this.userRepository.createNewUser(
             name,
+            username,
             email,
             hashedPassword,
             salt,
